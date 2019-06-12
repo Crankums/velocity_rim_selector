@@ -5,11 +5,13 @@ class Rim
 
     def initialize(rim_hash)
         rim_hash.each {|spec, value| self.send"#{spec}=", value}
-        @colors = []
-        @spoke = []
+        #these two will need to be arrays, or the values saved as arrays when paired to them:
+        #colors = []
+        #spoke = []
         @@all << self
     end
 
     def self.all
         @@all
     end
+end

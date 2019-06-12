@@ -4,14 +4,15 @@ require 'pry'
 
 class Scraper
 
-html = open('https://www.velocityusa.com/product/rim#application-tab')
+html = open('https://www.velocityusa.com/product/rims#application-tab')
 
     def self.page_scraper(html)
-        doc = Nokogiri::XML(html)
-        binding.pry
-        app_box = doc.css("#wh_use.wh_applications")
+        doc = Nokogiri::HTML(html)
+        application = doc.css('h3 a').map {|name| name.text}
+        links = doc.css('h3 a').map{|link| link['href']}
         #i'll likely have to condense the contents of these to an array. How do I capture the descriptor name without the link?
-        #then use detector methods to populate an array. bonus: i shouldn't have any hard-coded keys/elements. 
+        #then use detector methods to populate an array/hash. bonus: i shouldn't have any hard-coded keys/elements.
+        #after that, I can instantiate a Rim with the name I scrape, then populate with a hash grabbed from the next method 
     end
     
     #the product url is found in "#wh-use.wh-applications a". I could throw that directly in the argument, but i feel like there's a better way
