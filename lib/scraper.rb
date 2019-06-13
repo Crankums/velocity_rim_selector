@@ -4,10 +4,10 @@ require 'pry'
 
 class Scraper
 
-html = open('https://www.velocityusa.com/product/rims#application-tab')
+BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
 
-    def self.page_scraper(html)
-        doc = Nokogiri::HTML(html)
+    def self.page_scraper
+        doc = Nokogiri::HTML(BASE_URL)
         application = doc.css('h3 a').map {|name| name.text}
         links = doc.css('h3 a').map{|link| link['href']}
         rim_hash = Hash[application.zip(links)]

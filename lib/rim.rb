@@ -8,6 +8,7 @@ class Rim
         #these two will need to be arrays, or the values saved as arrays when paired to them:
         #colors = []
         #spoke = []
+        #application = [] has many
         @@all << self
     end
 
