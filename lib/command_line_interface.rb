@@ -12,9 +12,9 @@ class CLI
                 self.application_list
             elsif input.include?("nam")
                 self.rim_list
-            elsif name.include?("se")
-
-                
+            elsif input.include?("se")
+                rim_input =gets.strip.downcase
+                Rim.find_by_name(rim_input)                
             end
         end
     end
@@ -32,12 +32,14 @@ class CLI
         input
     end
 
-    def self.rim_list
-        Rim.all
+
+
+    def rim_list
+        Rim.all.each.with_index(1) {|index, name| puts "#{index}. #{Rim.name}"}
     end
 
-    def self.application_list
-        Application.all
+    def application_list
+        Application.all.each.with_index(1) {|index, name| puts "#{index}. #{Rim.name}"}
     end
 
 
