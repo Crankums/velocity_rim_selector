@@ -19,7 +19,7 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
     
     #the product url is found in "#wh-use.wh-applications a". I could throw that directly in the argument, but i feel like there's a better way
     def self.application_scraper(product_url)
-        spec_hash = {}
+        
         #create the container
         #comb the page, then the element
         # iterate the element to populate the hash
