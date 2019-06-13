@@ -10,6 +10,7 @@ html = open('https://www.velocityusa.com/product/rims#application-tab')
         doc = Nokogiri::HTML(html)
         application = doc.css('h3 a').map {|name| name.text}
         links = doc.css('h3 a').map{|link| link['href']}
+        rim_hash = Hash[application.zip(links)]
         #i'll likely have to condense the contents of these to an array. How do I capture the descriptor name without the link?
         #then use detector methods to populate an array/hash. bonus: i shouldn't have any hard-coded keys/elements.
         #after that, I can instantiate a Rim with the name I scrape, then populate with a hash grabbed from the next method 
