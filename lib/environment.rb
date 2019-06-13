@@ -1,6 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
-require "cli_project/version"
+require_relative "./cli_project/version"
 require 'pry'
 
 module CliProject
