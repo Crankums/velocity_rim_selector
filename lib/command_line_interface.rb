@@ -1,6 +1,5 @@
 
-
-class CLI_rim
+class CLI
 
     def run
         self.welcome
@@ -17,6 +16,8 @@ class CLI_rim
 
                 
             end
+        end
+    end
 
     def welcome
         puts "Welcome to the wheel builder! Please select an option to begin:"

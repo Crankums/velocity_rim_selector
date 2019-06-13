@@ -12,7 +12,7 @@ class Application
     end
 
     def rim_list
-
+        @rims
     end
 
     def self.all
