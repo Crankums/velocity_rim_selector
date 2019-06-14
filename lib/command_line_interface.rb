@@ -13,9 +13,12 @@ class CLI
             elsif input.include?("nam")
                 self.rim_list
             elsif input.include?("se")
-                puts "Please enter the name of the rim you wish to find:"
-                rim_input =gets.strip.downcase
-                result = Rim.find_by_name(rim_input) 
+                rim_input = gets.strip.downcase
+                result = self.search(rim_input)
+                if self.search(rim_input) == nil
+                    puts "Sorry, we can't seem to find that rim!" 
+                else result
+                end
             end
         end
     end
@@ -24,6 +27,10 @@ class CLI
         puts "Welcome to the wheel builder! Please select an option to begin:"
     end
 
+    def search(input)
+        input = gets.strip.downcase
+        Rim.find_by_name(input)
+    end
 
 
     def main_menu

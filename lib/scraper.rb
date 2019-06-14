@@ -22,11 +22,11 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         sizes = []
         html = open(page_url)
         doc = Nokogiri::HTML(html)
-        rims = doc.css('h3').map {|name| name.text.split(" ")}
+        rims = doc.css('h3').map {|name| name.text.split(/\s\d/)}
           #returns an array of arrays
-          
+          binding.pry
         rims.each do |arrs|
-            Rim.new(arrs[0], arrs[1]) 
+            Rim.new(arrs[0, arrs[1]]) 
         end
     end
 end
