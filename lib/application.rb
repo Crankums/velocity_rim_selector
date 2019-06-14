@@ -1,5 +1,5 @@
 class Application
-    include CliProject::Findable
+    extend CliProject::Findable
     attr_accessor :name, :url, :rims
 
     @@all = []

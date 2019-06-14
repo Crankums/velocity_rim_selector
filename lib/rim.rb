@@ -1,11 +1,13 @@
 class Rim
     extend CliProject::Findable
-    attr_accessor :rim_size, :width, :height, :optimal_tire, :interface, :valve, :bsd, :erd, :weight, :colors, :spoke
+    attr_accessor :name, :rim_size, :width, :height, :optimal_tire, :interface, :valve, :bsd, :erd, :weight, :colors, :spoke
 
     @@all = []
 
-    def initialize(rim_hash)
-        rim_hash.each {|spec, value| self.send"#{spec}=", value}
+    def initialize(name, size)
+        @name = name
+        @size = size
+        #rim_hash.each {|spec, value| self.send"#{spec}=", value}
         #these two will need to be arrays, or the values saved as arrays when paired to them:
         #colors = []
         #spoke = []

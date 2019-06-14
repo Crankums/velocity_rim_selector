@@ -18,11 +18,16 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
     end
     
     #the product url is found in "#wh-use.wh-applications a". I could throw that directly in the argument, but i feel like there's a better way
-    def self.application_scraper(product_url)
-        
-        #create the container
-        #comb the page, then the element
-        # iterate the element to populate the hash
-        #color and spoke count will both have arrays as values, so once the keys are made, shovel the choices into the waiting containers
+    def self.product_scraper(page_url)
+        names = []
+        sizes = []
+        html = open(page_url)
+        doc = Nokogiri::HTML(html)
+        rims = doc.css('h3').map {|name| name.text.split(" ")}
+          #returns an array of arrays
+          
+        rims.each do |arrs|
+            Rim.new(arrs[0], arrs[1]) 
+        end
     end
 end

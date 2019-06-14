@@ -13,8 +13,11 @@ class CLI
             elsif input.include?("nam")
                 self.rim_list
             elsif input.include?("se")
+                puts "Please enter the name of the rim you wish to find:"
                 rim_input =gets.strip.downcase
-                Rim.find_by_name(rim_input)                
+                result = Rim.find_by_name(rim_input) 
+                
+
             end
         end
     end
