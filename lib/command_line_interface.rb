@@ -8,7 +8,7 @@ class CLI
             input = main_menu
             if input == "x" || input.include?("ex")
                 return
-            elsif input.include?("app")
+            elsif input.include?("app")          
                 self.application_list
             elsif input.include?("nam")
                 self.rim_list
@@ -16,8 +16,6 @@ class CLI
                 puts "Please enter the name of the rim you wish to find:"
                 rim_input =gets.strip.downcase
                 result = Rim.find_by_name(rim_input) 
-                
-
             end
         end
     end
@@ -25,6 +23,8 @@ class CLI
     def welcome
         puts "Welcome to the wheel builder! Please select an option to begin:"
     end
+
+
 
     def main_menu
         puts "To choose rims by application, please type 'application'"
@@ -42,7 +42,7 @@ class CLI
     end
 
     def application_list
-        Application.all.each.with_index(1) {|index, name| puts "#{index}. #{Rim.name}"}
+        Application.all.each.with_index(1) {|app, index| puts "#{index}. #{app.name}"}
     end
 
 

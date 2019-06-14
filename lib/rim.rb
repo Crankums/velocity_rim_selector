@@ -4,7 +4,7 @@ class Rim
 
     @@all = []
 
-    def initialize(name, size)
+    def initialize(name)
         @name = name
         @size = size
         #rim_hash.each {|spec, value| self.send"#{spec}=", value}
