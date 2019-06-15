@@ -13,21 +13,23 @@ class CLI
                 puts "\n"
                 self.application_list
                 app_input = gets.strip.downcase
-                url = app_selector(app_input)
-                #binding.pry
+                app_url = app_selector(app_input)
                 Scraper.product_scraper(url)
                 puts "\n"
                 puts "Please select a rim for more information:"
                 self.rim_list
+                rim_input = gets.strip
+                rim_url = rim_selector(rim_input)
+                Scraper.rim_scraper(rim_url)
+                binding.pry
                 return
             # elsif input.include?("nam")
             #     self.rim_list
             elsif input.include?("se")
                 rim_input = gets.strip.downcase
-                result = self.search(rim_input)
-                if self.search(rim_input) == nil
+                rint = rim_input.to_s
+                if self.search(rint) == nil
                     puts "Sorry, we can't seem to find that rim!" 
-                else result
                 end
             end
         end
@@ -75,6 +77,11 @@ class CLI
     end
 
     def rim_selector(input)
+        input.to_i
+        rim_arr = Rim.all.map {|rim| rim.name}
+        result = Rim.find_by_name(rim_arr[input - 1])
+        puts "#{result.name}"
+        result.url
     end
 
 

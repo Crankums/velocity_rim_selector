@@ -28,5 +28,10 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         end
     end
 
+    def rim_scraper(rim_url)
+        html = open(rim_url)
+        doc = Nokogiri::HTML(html)
+    end
+
     
 end
