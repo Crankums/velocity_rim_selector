@@ -24,7 +24,7 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         links = doc.css('h3 a').map {|link| link['href']}
         rim_hash = Hash[rims.zip(links)]
         rim_hash.each do |name, url|
-            Rim.new(name, url) 
+            Rim.new(name, url)
         end
     end
 

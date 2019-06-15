@@ -10,11 +10,15 @@ class CLI
                 return
             elsif input.include?("app")          
                 puts "Please choose your riding style:"
+                puts "\n"
                 self.application_list
                 app_input = gets.strip.downcase
                 url = app_selector(app_input)
+                #binding.pry
                 Scraper.product_scraper(url)
-                
+                puts "\n"
+                puts "Please select a rim for more information:"
+                self.rim_list
                 return
             # elsif input.include?("nam")
             #     self.rim_list
@@ -30,6 +34,7 @@ class CLI
     end
 
     def welcome
+        puts "\n"
         puts "Welcome to the wheel builder! Please select an option to begin:"
     end
 
@@ -40,9 +45,12 @@ class CLI
 
 
     def main_menu
+        puts "\n"
         puts "To choose rims by application, please type 'application'"
+        puts "\n"
         # puts "To choose rims by name, please type 'name'"
         puts "If you know the name of the rim you're looking for, please type 'search'"
+        puts "\n"
         puts "To exit, type 'x' or 'exit'"
         input = gets.strip.downcase
         input
@@ -50,9 +58,9 @@ class CLI
 
 
 
-    # def rim_list
-    #     Rim.all.each.with_index(1) {|index, name| puts "#{index}. #{Rim.name}"}
-    # end
+    def rim_list
+         Rim.all.each.with_index(1) {|rim, index| puts "#{index}. #{rim.name}"}
+    end
 
     def application_list
         Application.all.map.with_index(1) {|app, index| puts "#{index}. #{app.name}"}
@@ -65,4 +73,9 @@ class CLI
         puts "#{result.name}"
         result.url
     end
+
+    def rim_selector(input)
+    end
+
+
 end
