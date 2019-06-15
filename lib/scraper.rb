@@ -28,11 +28,31 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         end
     end
 
-    def rim_scraper(rim_url)
+    def self.rim_scraper(rim_url)
         spec_hash = {}
         html = open(rim_url)
         doc = Nokogiri::HTML(html)
         desc = doc.css('#prod_desc a').map {|p| p.text}
         specs = doc.css('#prod_specs p').map {|p| p.text.strip}
+        specs.each do |attrib|
+            if attrib.include?("Size")
+                spec_hash[:rim_size]= attrib
+            elsif attrib.include?("Height")
+                spec_hash[:height]= attrib
+            elsif attrib.include?("Optimal")
+                spec_hash[:optimal_tire]= attrib
+            elsif attrib.include?("Interface")
+                spec_hash[:interface]= attrib
+            elsif attrib.include?("Valve")
+                spec_hash[:valve]= attrib
+            elsif attrib.include?("BSD")
+                spec_hash[:bsd]= attrib
+            elsif attrib.include?("ERD")
+                spec_hash[:erd]= attrib
+            elsif attrib.include?("Weight")
+                spec_hash[:weight]= attrib
+            end
+        end
+        spec_hash
     end  
 end

@@ -21,12 +21,12 @@ class CLI
                 rim_input = gets.strip
                 rim_url = rim_selector(rim_input)
                 Scraper.rim_scraper(rim_url)
-                binding.pry
                 return
             # elsif input.include?("nam")
             #     self.rim_list
             elsif input.include?("se")
-                rim_input = gets.strip.downcase
+                puts "Please type in the name of the rim you're trying to find:"
+                rim_input = gets.strip
                 rint = rim_input.to_s
                 if self.search(rint) == nil
                     puts "Sorry, we can't seem to find that rim!" 
@@ -41,7 +41,6 @@ class CLI
     end
 
     def search(input)
-        input = gets.strip.downcase
         Rim.find_by_name(input)
     end
 
