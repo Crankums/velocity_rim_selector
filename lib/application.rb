@@ -11,12 +11,10 @@ class Application
         @@all << self
     end
 
-    def rim_list
-        @rims
-    end
-
     def self.all
         @@all
     end
 
+    # def rims=
+    # end
 end
