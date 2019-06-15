@@ -21,10 +21,6 @@ class CLI
                 rim_input = gets.strip
                 rim_url = rim_selector(rim_input)
                 binding.pry
-                #Scraper.rim_scraper(rim_url)
-                return
-            # elsif input.include?("nam")
-            #     self.rim_list
             elsif input.include?("se")
                 puts "Please type in the name of the rim you're trying to find:"
                 rim_input = gets.strip
@@ -81,7 +77,8 @@ class CLI
         rim_arr = Rim.all.map {|rim| rim.name}
         result = Rim.find_by_name(rim_arr[int - 1])
         puts "#{result.name}"
-        result.url
+        
+        binding.pry
     end
 
 

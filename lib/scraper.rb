@@ -35,6 +35,7 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         doc = Nokogiri::HTML(html)
         desc = doc.css('#prod_desc a').map {|p| p.text}
         specs = doc.css('#prod_specs p').map {|p| p.text.strip}
+        spokes = []
         specs.each do |attrib|
             if attrib.include?("Size")
                 spec_hash[:rim_size]= attrib
@@ -52,7 +53,10 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
                 spec_hash[:erd]= attrib
             elsif attrib.include?("Weight")
                 spec_hash[:weight]= attrib
+            elsif attrib.include?("spoke")
+                spokes << attrib
             end
+            spec_hash[:spoke]= spokes
         end
         spec_hash
     end  
