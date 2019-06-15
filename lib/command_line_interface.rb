@@ -77,9 +77,9 @@ class CLI
     end
 
     def rim_selector(input)
-        input.to_i
+        int = input.to_i
         rim_arr = Rim.all.map {|rim| rim.name}
-        result = Rim.find_by_name(rim_arr[input - 1])
+        result = Rim.find_by_name(rim_arr[int - 1])
         puts "#{result.name}"
         result.url
     end

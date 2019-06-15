@@ -16,7 +16,6 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         end    
     end
     
-    #the product url is found in "#wh-use.wh-applications a". I could throw that directly in the argument, but i feel like there's a better way
     def self.product_scraper(app_url)
         html = open(app_url)
         doc = Nokogiri::HTML(html)
@@ -24,7 +23,9 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         links = doc.css('h3 a').map {|link| link['href']}
         rim_hash = Hash[rims.zip(links)]
         rim_hash.each do |name, url|
-            Rim.new(name, url)
+             rim = Rim.new(name, url)
+             spec_hash = rim_scraper(url)
+             rim.add_attributes(spec_hash)
         end
     end
 

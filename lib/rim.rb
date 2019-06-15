@@ -22,7 +22,7 @@ class Rim
     # end
 
     def add_attributes(hash)
-        hash.each {|attrib, value| self.send("#{attrib}", value)}
+        hash.each {|attrib, value| self.send("#{attrib}=", value)}
     end
 
     def self.all
