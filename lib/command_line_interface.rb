@@ -12,7 +12,9 @@ class CLI
                 puts "Please choose your riding style:"
                 self.application_list
                 app_input = gets.strip.downcase
-                app_selector(app_input)
+                url = app_selector(app_input)
+                Scraper.product_scraper(url)
+                
                 return
             # elsif input.include?("nam")
             #     self.rim_list

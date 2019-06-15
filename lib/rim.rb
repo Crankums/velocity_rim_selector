@@ -4,9 +4,10 @@ class Rim
 
     @@all = []
 
-    def initialize(name)
+    def initialize(name, url, spec_hash = {})
         @name = name
-        rim_hash.each {|spec, value| self.send"#{spec}=", value}
+        @url = url
+        #spec_hash.each {|spec, value| self.send"#{spec}=", value}
         #these two will need to be arrays, or the values saved as arrays when paired to them:
         #colors = []
         #spoke = []
