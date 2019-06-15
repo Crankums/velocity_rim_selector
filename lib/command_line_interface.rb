@@ -19,14 +19,15 @@ class CLI
                 puts "Please select a rim for more information:"
                 self.rim_list
                 rim_input = gets.strip
-                rim_url = rim_selector(rim_input)
-                binding.pry
+                rim_selector(rim_input)
+                #binding.pry
             elsif input.include?("se")
                 puts "Please type in the name of the rim you're trying to find:"
                 rim_input = gets.strip
                 rint = rim_input.to_s
                 if self.search(rint) == nil
                     puts "Sorry, we can't seem to find that rim!" 
+
                 end
             end
         end
@@ -38,7 +39,9 @@ class CLI
     end
 
     def search(input)
-        Rim.find_by_name(input)
+        result = Rim.find_by_name(input)
+        puts "#{result}"
+        result
     end
 
 
@@ -47,7 +50,7 @@ class CLI
         puts "To choose rims by application, please type 'application'"
         puts "\n"
         # puts "To choose rims by name, please type 'name'"
-        puts "If you know the name of the rim you're looking for, please type 'search'"
+        puts "If you would like to search for a previously viewed rim, please type 'search'"
         puts "\n"
         puts "To exit, type 'x' or 'exit'"
         input = gets.strip.downcase
@@ -78,6 +81,6 @@ class CLI
         result = Rim.find_by_name(rim_arr[int - 1])
         puts "#{result.name}"
 
-        binding.pry
+        #binding.pry
     end
 end

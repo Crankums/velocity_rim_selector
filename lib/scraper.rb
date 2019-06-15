@@ -33,7 +33,7 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         spec_hash = {}
         html = open(rim_url)
         doc = Nokogiri::HTML(html)
-        desc = doc.css('#prod_desc').map {|p| p.text.strip}
+        desc = doc.css('#prod_desc').text.strip
         specs = doc.css('#prod_specs p').map {|p| p.text.strip}
         spokes = []
         specs.each do |attrib|
