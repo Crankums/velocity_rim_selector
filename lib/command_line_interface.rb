@@ -9,9 +9,13 @@ class CLI
             if input == "x" || input.include?("ex")
                 return
             elsif input.include?("app")          
+                puts "Please choose your riding style:"
                 self.application_list
-            elsif input.include?("nam")
-                self.rim_list
+                app_input = gets.strip.downcase
+                app_selector(app_input)
+                return
+            # elsif input.include?("nam")
+            #     self.rim_list
             elsif input.include?("se")
                 rim_input = gets.strip.downcase
                 result = self.search(rim_input)
@@ -35,7 +39,7 @@ class CLI
 
     def main_menu
         puts "To choose rims by application, please type 'application'"
-        puts "To choose rims by name, please type 'name'"
+        # puts "To choose rims by name, please type 'name'"
         puts "If you know the name of the rim you're looking for, please type 'search'"
         puts "To exit, type 'x' or 'exit'"
         input = gets.strip.downcase
@@ -44,13 +48,19 @@ class CLI
 
 
 
-    def rim_list
-        Rim.all.each.with_index(1) {|index, name| puts "#{index}. #{Rim.name}"}
-    end
+    # def rim_list
+    #     Rim.all.each.with_index(1) {|index, name| puts "#{index}. #{Rim.name}"}
+    # end
 
     def application_list
-        Application.all.each.with_index(1) {|app, index| puts "#{index}. #{app.name}"}
+        Application.all.map.with_index(1) {|app, index| puts "#{index}. #{app.name}"}
     end
 
-
+    def app_selector(input)
+        int = input.to_i
+        app_arr = Application.all.map {|app| app.name}
+        result = Application.find_by_name(app_arr[int-1])
+        puts "#{result.name}"
+        result.url
+    end
 end

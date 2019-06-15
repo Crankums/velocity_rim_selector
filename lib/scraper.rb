@@ -20,13 +20,16 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
     def self.product_scraper(app_url)
         names = []
         sizes = []
-        html = open(page_url)
+        html = open(app_url)
         doc = Nokogiri::HTML(html)
-        rims = doc.css('h3').map {|name| name.text.split(/\s\d/)}
+        rims = doc.css('h3').map {|name| name.text.split}
+
           #returns an array of arrays
-          binding.pry
+          #binding.pry
         rims.each do |arrs|
             Rim.new(arrs[0, arrs[1]]) 
         end
     end
+
+    
 end

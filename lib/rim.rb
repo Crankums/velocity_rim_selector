@@ -6,8 +6,7 @@ class Rim
 
     def initialize(name)
         @name = name
-        @size = size
-        #rim_hash.each {|spec, value| self.send"#{spec}=", value}
+        rim_hash.each {|spec, value| self.send"#{spec}=", value}
         #these two will need to be arrays, or the values saved as arrays when paired to them:
         #colors = []
         #spoke = []
