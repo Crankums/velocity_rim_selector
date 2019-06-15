@@ -8,18 +8,8 @@ class Rim
         @name = name
         @url = url
         @applications = []
-        #spec_hash.each {|spec, value| self.send"#{spec}=", value}
-        #these two will need to be arrays, or the values saved as arrays when paired to them:
-        #colors = []
-        #spoke = []
-        #application = [] has many, has many
         @@all << self
     end
-
-    # def add_app(app)
-    #     app.rims = self unless app.rims == self
-    #     @applications << app unless @applications.include?(app)
-    # end
 
     def add_attributes(hash)
         hash.each {|attrib, value| self.send("#{attrib}=", value)}

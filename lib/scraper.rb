@@ -8,7 +8,7 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
 
     def self.page_scraper
         doc = Nokogiri::HTML(BASE_URL)
-        application = doc.css('h3 a').map {|name| name.text} #in my css selector, I could probably skip the 'a', but it seems prudent to have some kind of range on it
+        application = doc.css('h3 a').map {|name| name.text}
         links = doc.css('h3 a').map{|link| link['href']}
         app_hash = Hash[application.zip(links)]
         app_hash.each do |name, url|
@@ -33,7 +33,7 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         spec_hash = {}
         html = open(rim_url)
         doc = Nokogiri::HTML(html)
-        desc = doc.css('#prod_desc a').map {|p| p.text}
+        desc = doc.css('#prod_desc').map {|p| p.text.strip}
         specs = doc.css('#prod_specs p').map {|p| p.text.strip}
         spokes = []
         specs.each do |attrib|
@@ -57,6 +57,7 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
                 spokes << attrib
             end
             spec_hash[:spoke]= spokes
+            spec_hash[:desc]= desc
         end
         spec_hash
     end  

@@ -14,7 +14,4 @@ class Application
     def self.all
         @@all
     end
-
-    # def rims=
-    # end
 end

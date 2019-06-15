@@ -77,9 +77,7 @@ class CLI
         rim_arr = Rim.all.map {|rim| rim.name}
         result = Rim.find_by_name(rim_arr[int - 1])
         puts "#{result.name}"
-        
+
         binding.pry
     end
-
-
 end
