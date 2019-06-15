@@ -29,8 +29,10 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
     end
 
     def rim_scraper(rim_url)
+        spec_hash = {}
         html = open(rim_url)
         doc = Nokogiri::HTML(html)
-        specs = doc.css('#prod_specs').text
+        desc = doc.css('#prod_desc a').map {|p| p.text}
+        specs = doc.css('#prod_specs p').map {|p| p.text.strip}
     end  
 end
