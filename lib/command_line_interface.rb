@@ -14,13 +14,14 @@ class CLI
                 self.application_list
                 app_input = gets.strip.downcase
                 app_url = app_selector(app_input)
-                Scraper.product_scraper(url)
+                Scraper.product_scraper(app_url)
                 puts "\n"
                 puts "Please select a rim for more information:"
                 self.rim_list
                 rim_input = gets.strip
                 rim_url = rim_selector(rim_input)
-                Scraper.rim_scraper(rim_url)
+                binding.pry
+                #Scraper.rim_scraper(rim_url)
                 return
             # elsif input.include?("nam")
             #     self.rim_list
