@@ -63,12 +63,10 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
                 spokes<<arr.first
                 colors<<color
             end
-            
             spec_hash[:spoke]= spokes.uniq
             spec_hash[:colors]= colors.flatten.uniq
             spec_hash[:desc]= desc
         end
-        #binding.pry
         spec_hash
     end  
 end

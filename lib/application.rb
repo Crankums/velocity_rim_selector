@@ -4,11 +4,17 @@ class Application
 
     @@all = []
 
-    def initialize(name, url)
+    def initialize(name, url = nil)
         @name = name
         @url = url
         @rims = []
         @@all << self
+    end
+
+    def self.create(name)
+        app = Application.new(name)
+        @@all << app
+        app
     end
 
     def add_rims(rim)

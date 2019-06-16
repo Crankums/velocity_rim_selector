@@ -15,6 +15,12 @@ class Rim
         hash.each {|attrib, value| self.send("#{attrib}=", value)}
     end
 
+    def self.create(name)
+        rim = Rim.new(name)
+        @@all << rim
+        rim
+    end
+    
     def self.all
         @@all
     end

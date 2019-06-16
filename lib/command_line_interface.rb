@@ -14,7 +14,7 @@ class CLI
                 app_input = gets.strip.downcase
                 app = app_selector(app_input)
                 puts "Please wait while we populate your selection..."
-                Scraper.product_scraper(app.url) unless Scraper.product_scraper(app.url) != nil 
+                Scraper.product_scraper(app.url)   
                 puts "\nPlease select a rim for more information:"
                 rim_list(app)
                 rim_input = gets.strip.to_i
@@ -30,12 +30,12 @@ class CLI
                 if confirm_selection?(app, rim, snc)
                     puts "\nBye!"
                     break
+                else
                 end
             elsif input.include?("se")
                 puts "Please type in the name of the rim you're trying to find:"
-                rim_input = gets.strip
-                rint = rim_input.to_s
-                if self.search(rint) == nil
+                search_input = gets.strip.to_s
+                if self.search(search_input) == nil
                     puts "Sorry, we can't seem to find that rim!"
                 end
             end
@@ -50,7 +50,6 @@ class CLI
         result = Rim.find_by_name(input)
         spec_printer(result)
     end
-
 
     def main_menu
         puts "\nTo choose rims by application, please type 'application'\n"
@@ -118,5 +117,6 @@ class CLI
         else
             return false
         end
+
     end
 end
