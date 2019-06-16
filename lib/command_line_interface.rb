@@ -27,15 +27,14 @@ class CLI
                 end
                 puts "\nPlease select your spoke count and color:\n"
                 snc = spoke_and_color(rim)
-                if confirm_selection?(app, rim, snc)
+                if confirm_selection?(rim, snc)
                     puts "\nBye!"
                     break
-                else
                 end
             elsif input.include?("se")
                 puts "Please type in the name of the rim you're trying to find:"
                 search_input = gets.strip.to_s
-                if self.search(search_input) == nil
+                if search(search_input) == nil
                     puts "Sorry, we can't seem to find that rim!"
                 end
             end
@@ -43,12 +42,21 @@ class CLI
     end
 
     def welcome
-        puts "\nWelcome to the wheel builder! Please select an option to begin:"
+        puts "\nWelcome to the Wheel Builder CLI! Please select an option to begin:"
     end
 
     def search(input)
         result = Rim.find_by_name(input)
         spec_printer(result)
+        puts "#{result.spoke}"
+        puts "#{result.colors}"
+        puts "Continue with this rim? (y/n)"
+        if gets.strip.downcase.include?("y")
+            snc = spoke_and_color(result)
+            confirm_selection?(result, snc)
+        else
+            result
+        end
     end
 
     def main_menu
@@ -107,8 +115,8 @@ class CLI
         puts "#{rim.weight}"
     end
 
-    def confirm_selection?(app, rim, snc)
-        puts "You have chosen the #{rim.name} in #{snc[0]},#{snc[1]} to be used for #{app.name} riding"
+    def confirm_selection?(rim, snc)
+        puts "You have chosen the #{rim.name} in #{snc[0]},#{snc[1]}."
         puts "\nIs this correct? (y/n)"
         input = gets.strip.downcase
         if input.include?("y")
