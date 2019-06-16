@@ -9,56 +9,50 @@ class CLI
             if input == "x" || input.include?("ex")
                 return
             elsif input.include?("app")          
-                puts "Please choose your riding style:"
-                puts "\n"
+                puts "Please choose your riding style:\n"
                 application_list
                 app_input = gets.strip.downcase
                 app = app_selector(app_input)
                 puts "Please wait while we populate your selection..."
-                Scraper.product_scraper(app.url)
-                puts "\n"
-                puts "Please select a rim for more information:"
+                Scraper.product_scraper(app.url) unless Scraper.product_scraper(app.url) != nil 
+                puts "\nPlease select a rim for more information:"
                 rim_list
                 rim_input = gets.strip.to_i
                 rim = rim_selector(rim_input)
-                puts "\n"
-                puts "Please select your spoke count and color:"
-                puts "\n"
-                self.spoke_and_color(rim)
-                
-                #binding.pry
+                puts "\nWould you like to see the description and specs? (y/n)"
+                spec = gets.strip.downcase
+                if spec.include?("y")
+                    puts "\n"
+                    spec_printer(rim)
+                end
+                puts "\nPlease select your spoke count and color:\n"
+                snc = spoke_and_color(rim)
+                confirm_selection?(app, rim, snc)
             elsif input.include?("se")
                 puts "Please type in the name of the rim you're trying to find:"
                 rim_input = gets.strip
                 rint = rim_input.to_s
                 if self.search(rint) == nil
-                    puts "Sorry, we can't seem to find that rim!" 
-
+                    puts "Sorry, we can't seem to find that rim!"
                 end
             end
         end
     end
 
     def welcome
-        puts "\n"
-        puts "Welcome to the wheel builder! Please select an option to begin:"
+        puts "\nWelcome to the wheel builder! Please select an option to begin:"
     end
 
     def search(input)
         result = Rim.find_by_name(input)
         spec_printer(result)
-
     end
 
 
     def main_menu
-        puts "\n"
-        puts "To choose rims by application, please type 'application'"
-        puts "\n"
-        # puts "To choose rims by name, please type 'name'"
-        puts "If you would like to search for a previously viewed rim, please type 'search'"
-        puts "\n"
-        puts "To exit, type 'x' or 'exit'"
+        puts "\nTo choose rims by application, please type 'application'\n"
+        puts "\nIf you would like to search for a previously viewed rim, please type 'search'"
+        puts "\nTo exit, type 'x' or 'exit'"
         input = gets.strip.downcase
     end
     
@@ -67,13 +61,12 @@ class CLI
         input = gets.strip.to_i
         count = rim.spoke[input-1]
         puts "#{count}"
-        puts "\n"
-        puts "And color?"
-        puts "\n"
-        #binding.pry
+        puts "\nAnd color?\n"
         rim.colors.each.with_index(1){|color, index| puts "#{index}. #{color}"}
-        color_choice = gets.strip.to_i
-        puts "#{rim.colors[color_choice-1]}"
+        pick = gets.strip.to_i
+        color = rim.colors[pick-1]
+        puts "#{rim.colors[pick-1]}"
+        result = [count, color]
     end
 
     def rim_list
@@ -96,7 +89,7 @@ class CLI
         rim_arr = Rim.all.map {|rim| rim.name}
         result = Rim.find_by_name(rim_arr[input - 1])
         puts "#{result.name}"
-        spec_printer(result)
+        #spec_printer(result)
         result
         #binding.pry
     end
@@ -110,5 +103,19 @@ class CLI
         puts "#{rim.bsd}"
         puts "#{rim.erd}"
         puts "#{rim.weight}"
+    end
+
+    def confirm_selection?(app, rim, snc)
+        puts "You have chosen:"
+        puts "the #{rim.name}"
+        puts "in"
+        puts "#{snc}"
+        puts "for #{app.name} riding"
+        puts "Is this correct? (y/n)"
+        input = gets.strip.downcase
+        if input.include?("y")
+            puts "Fantastic choice! Stay tuned for the hub selector extension!"
+            return
+        end
     end
 end
