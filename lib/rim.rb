@@ -4,7 +4,7 @@ class Rim
 
     @@all = []
 
-    def initialize(name, url, desc = nil, spec_hash = nil)
+    def initialize(name, url = nil, desc = nil, spec_hash = nil)
         @name = name
         @url = url
         @applications = []

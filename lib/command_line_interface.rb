@@ -16,9 +16,9 @@ class CLI
                 puts "Please wait while we populate your selection..."
                 Scraper.product_scraper(app.url) unless Scraper.product_scraper(app.url) != nil 
                 puts "\nPlease select a rim for more information:"
-                rim_list
+                rim_list(app)
                 rim_input = gets.strip.to_i
-                rim = rim_selector(rim_input)
+                rim = rim_selector(rim_input, app)
                 puts "\nWould you like to see the description and specs? (y/n)"
                 spec = gets.strip.downcase
                 if spec.include?("y")
@@ -27,7 +27,10 @@ class CLI
                 end
                 puts "\nPlease select your spoke count and color:\n"
                 snc = spoke_and_color(rim)
-                confirm_selection?(app, rim, snc)
+                if confirm_selection?(app, rim, snc)
+                    puts "\nBye!"
+                    break
+                end
             elsif input.include?("se")
                 puts "Please type in the name of the rim you're trying to find:"
                 rim_input = gets.strip
@@ -69,8 +72,8 @@ class CLI
         result = [count, color]
     end
 
-    def rim_list
-         Rim.all.each.with_index(1) {|rim, index| puts "#{index}. #{rim.name}"}
+    def rim_list(app)
+         app.rims.each.with_index(1) {|rim, index| puts "#{index}. #{rim.name}"}
     end
 
     def application_list
@@ -85,8 +88,8 @@ class CLI
         result
     end
 
-    def rim_selector(input)
-        rim_arr = Rim.all.map {|rim| rim.name}
+    def rim_selector(input, app)
+        rim_arr = app.rims.map {|rim| rim.name}
         result = Rim.find_by_name(rim_arr[input - 1])
         puts "#{result.name}"
         #spec_printer(result)
@@ -106,16 +109,14 @@ class CLI
     end
 
     def confirm_selection?(app, rim, snc)
-        puts "You have chosen:"
-        puts "the #{rim.name}"
-        puts "in"
-        puts "#{snc}"
-        puts "for #{app.name} riding"
-        puts "Is this correct? (y/n)"
+        puts "You have chosen the #{rim.name} in #{snc[0]},#{snc[1]} to be used for #{app.name} riding"
+        puts "\nIs this correct? (y/n)"
         input = gets.strip.downcase
         if input.include?("y")
-            puts "Fantastic choice! Stay tuned for the hub selector extension!"
-            return
+            puts "\nFantastic choice! Stay tuned for the hub selector extension!"
+            return true
+        else
+            return false
         end
     end
 end

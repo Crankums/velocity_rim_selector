@@ -16,16 +16,19 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         end    
     end
     
-    def self.product_scraper(app_url)
-        html = open(app_url)
+    def self.product_scraper(app)
+        html = open(app)
         doc = Nokogiri::HTML(html)
         rims = doc.css('h3').map {|name| name.text}
         links = doc.css('h3 a').map {|link| link['href']}
+        inst = Application.find_by_url(app)
         rim_hash = Hash[rims.zip(links)]
         rim_hash.each do |name, url|
              rim = Rim.new(name, url)
              spec_hash = rim_scraper(url)
              rim.add_attributes(spec_hash)
+             inst.rims << rim
+             rim.applications << inst
         end
     end
 

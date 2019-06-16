@@ -11,6 +11,11 @@ class Application
         @@all << self
     end
 
+    def add_rims(rim)
+        self.rims << rim unless self.rims.include?(rim)
+    end
+
+
     def self.all
         @@all
     end
