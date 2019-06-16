@@ -36,6 +36,7 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         desc = doc.css('#prod_desc').text.strip
         specs = doc.css('#prod_specs p').map {|p| p.text.strip}
         spokes = []
+        colors = []
         specs.each do |attrib|
             if attrib.include?("Size")
                 spec_hash[:rim_size]= attrib
@@ -54,11 +55,17 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
             elsif attrib.include?("Weight")
                 spec_hash[:weight]= attrib
             elsif attrib.include?("spoke")
-                spokes << attrib
+                arr = attrib.split(/[:,]/)
+                color = arr.slice(2, arr.length)
+                spokes<<arr.first
+                colors<<color
             end
-            spec_hash[:spoke]= spokes
+            
+            spec_hash[:spoke]= spokes.uniq
+            spec_hash[:colors]= colors.flatten.uniq
             spec_hash[:desc]= desc
         end
+        #binding.pry
         spec_hash
     end  
 end

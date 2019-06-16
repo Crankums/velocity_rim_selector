@@ -19,7 +19,12 @@ class CLI
                 puts "Please select a rim for more information:"
                 self.rim_list
                 rim_input = gets.strip
-                rim_selector(rim_input)
+                rim = rim_selector(rim_input)
+                puts "\n"
+                puts "Please select your spoke count and color:"
+                puts "\n"
+                self.spoke_list(rim)
+                
                 #binding.pry
             elsif input.include?("se")
                 puts "Please type in the name of the rim you're trying to find:"
@@ -40,8 +45,8 @@ class CLI
 
     def search(input)
         result = Rim.find_by_name(input)
-        puts "#{result}"
-        result
+        spec_printer(result)
+
     end
 
 
@@ -56,8 +61,14 @@ class CLI
         input = gets.strip.downcase
         input
     end
-
-
+    
+    def spoke_list(rim)
+        rim.spoke.each.with_index(1){|count, index| puts "#{index}. #{count}"}
+        input = gets.strip
+        int = input.to_i
+        count = rim.spoke[int-1]
+        puts "#{count}"
+    end
 
     def rim_list
          Rim.all.each.with_index(1) {|rim, index| puts "#{index}. #{rim.name}"}
@@ -80,7 +91,23 @@ class CLI
         rim_arr = Rim.all.map {|rim| rim.name}
         result = Rim.find_by_name(rim_arr[int - 1])
         puts "#{result.name}"
-
+        spec_printer(result)
+        result
         #binding.pry
+    end
+
+    def spec_printer(rim)
+        puts "#{rim.desc}"
+        puts "#{rim.height}"
+        puts "#{rim.optimal_tire}"
+        puts "#{rim.interface}"
+        puts "#{rim.valve}"
+        puts "#{rim.bsd}"
+        puts "#{rim.erd}"
+        puts "#{rim.weight}"
+    end
+
+    def spoke_selector(input)
+        input.to_i        
     end
 end
