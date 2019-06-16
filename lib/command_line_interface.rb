@@ -11,20 +11,20 @@ class CLI
             elsif input.include?("app")          
                 puts "Please choose your riding style:"
                 puts "\n"
-                self.application_list
+                application_list
                 app_input = gets.strip.downcase
-                app_url = app_selector(app_input)
+                app = app_selector(app_input)
                 puts "Please wait while we populate your selection..."
-                Scraper.product_scraper(app_url)
+                Scraper.product_scraper(app.url)
                 puts "\n"
                 puts "Please select a rim for more information:"
-                self.rim_list
+                rim_list
                 rim_input = gets.strip.to_i
                 rim = rim_selector(rim_input)
                 puts "\n"
                 puts "Please select your spoke count and color:"
                 puts "\n"
-                self.spoke_list(rim)
+                self.spoke_and_color(rim)
                 
                 #binding.pry
             elsif input.include?("se")
@@ -62,7 +62,7 @@ class CLI
         input = gets.strip.downcase
     end
     
-    def spoke_list(rim)
+    def spoke_and_color(rim)
         rim.spoke.each.with_index(1){|count, index| puts "#{index}. #{count}"}
         input = gets.strip.to_i
         count = rim.spoke[input-1]
@@ -89,7 +89,7 @@ class CLI
         app_arr = Application.all.map {|app| app.name}
         result = Application.find_by_name(app_arr[int-1])
         puts "#{result.name}"
-        result.url
+        result
     end
 
     def rim_selector(input)
