@@ -14,11 +14,12 @@ class CLI
                 self.application_list
                 app_input = gets.strip.downcase
                 app_url = app_selector(app_input)
+                puts "Please wait while we populate your selection..."
                 Scraper.product_scraper(app_url)
                 puts "\n"
                 puts "Please select a rim for more information:"
                 self.rim_list
-                rim_input = gets.strip
+                rim_input = gets.strip.to_i
                 rim = rim_selector(rim_input)
                 puts "\n"
                 puts "Please select your spoke count and color:"
@@ -59,15 +60,20 @@ class CLI
         puts "\n"
         puts "To exit, type 'x' or 'exit'"
         input = gets.strip.downcase
-        input
     end
     
     def spoke_list(rim)
         rim.spoke.each.with_index(1){|count, index| puts "#{index}. #{count}"}
-        input = gets.strip
-        int = input.to_i
-        count = rim.spoke[int-1]
+        input = gets.strip.to_i
+        count = rim.spoke[input-1]
         puts "#{count}"
+        puts "\n"
+        puts "And color?"
+        puts "\n"
+        #binding.pry
+        rim.colors.each.with_index(1){|color, index| puts "#{index}. #{color}"}
+        color_choice = gets.strip.to_i
+        puts "#{rim.colors[color_choice-1]}"
     end
 
     def rim_list
@@ -87,9 +93,8 @@ class CLI
     end
 
     def rim_selector(input)
-        int = input.to_i
         rim_arr = Rim.all.map {|rim| rim.name}
-        result = Rim.find_by_name(rim_arr[int - 1])
+        result = Rim.find_by_name(rim_arr[input - 1])
         puts "#{result.name}"
         spec_printer(result)
         result
@@ -105,9 +110,5 @@ class CLI
         puts "#{rim.bsd}"
         puts "#{rim.erd}"
         puts "#{rim.weight}"
-    end
-
-    def spoke_selector(input)
-        input.to_i        
     end
 end

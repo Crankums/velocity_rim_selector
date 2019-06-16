@@ -56,7 +56,7 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
                 spec_hash[:weight]= attrib
             elsif attrib.include?("spoke")
                 arr = attrib.split(/[:,]/)
-                color = arr.slice(2, arr.length)
+                color = arr.slice(1..arr.length)
                 spokes<<arr.first
                 colors<<color
             end
