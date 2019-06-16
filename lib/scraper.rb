@@ -24,11 +24,12 @@ BASE_URL = open('https://www.velocityusa.com/product/rims#application-tab')
         inst = Application.find_by_url(app)
         rim_hash = Hash[rims.zip(links)]
         rim_hash.each do |name, url|
-             rim = Rim.new(name, url)
+             rim = Rim.find_or_create_by_name(name)
+             rim.url = url
              spec_hash = rim_scraper(url)
              rim.add_attributes(spec_hash)
-             inst.rims << rim
-             rim.applications << inst
+             inst.add_rims(rim)
+             rim.add_apps(app)
         end
     end
 

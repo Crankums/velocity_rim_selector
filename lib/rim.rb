@@ -20,6 +20,10 @@ class Rim
         @@all << rim
         rim
     end
+
+    def add_apps(app)
+        self.applications << app unless self.applications.include?(app)
+    end
     
     def self.all
         @@all
