@@ -3,6 +3,10 @@ class CLI
 
     def run
         self.welcome
+        scraper_sequence
+    end
+
+    def scraper_sequence
         Scraper.page_scraper
         loop do
             input = main_menu
@@ -11,8 +15,10 @@ class CLI
             elsif input.include?("app")          
                 puts "Please choose your riding style:\n"
                 application_list
-                app_input = gets.strip.downcase
-                app = app_selector(app_input)
+                app = app_selector
+                if app == nil
+                    next
+                end
                 puts "Please wait while we populate your selection..."
                 Scraper.product_scraper(app.url)   
                 puts "\nPlease select a rim for more information:"
@@ -40,6 +46,8 @@ class CLI
             end
         end
     end
+
+# Instance methods used in #scraper_sequence
 
     def welcome
         puts "\nWelcome to the Wheel Builder CLI! Please select an option to begin:"
@@ -87,22 +95,42 @@ class CLI
         Application.all.map.with_index(1) {|app, index| puts "#{index}. #{app.name}"}
     end
 
-    def app_selector(input)
-        int = input.to_i
+    # I could condense the "_list" methods into one method using a .find_by_name method and an 'or' operator.
+    # The idea there is whatever returns a result then gets mapped and listed.
+
+    def app_selector
+        input = gets.strip
+        int = input.to_i            
         app_arr = Application.all.map {|app| app.name}
-        result = Application.find_by_name(app_arr[int-1])
-        puts "#{result.name}"
+        if int <= 0 || int > app_arr.length
+            return nil
+        end
+        result = Application.find_by_name(app_arr[int-1])                
+        puts "#{result.name}"        
         result
     end
+    # The shortest, laziest solution I have is to move up a couple lines and restart the #run method. This keeps the
+    # program from breaking, but does require the user to go back to the list agin. the problem is that because the
+    # program is running from inside #app_selector, it becomes the return value for #app_selector.
+    # The solution was to name a condition. If #app_selector yielded "nil", the menu would just start over. 
+    # #rim_selector would require a similar solution, with an even bigger refactoring. I would have to loop everything
+    # south of the line where 'Scraper.product_scraper' appears, which may require breaking the #scraper_sequence method
+    # into several methods in order to produce a more manageable code.
 
     def rim_selector(input, app)
         rim_arr = app.rims.map {|rim| rim.name}
         result = Rim.find_by_name(rim_arr[input - 1])
+        #^^change this method to .find_or_create_by_name(rim_arr[input-1])
+        #url = result.url
+        #spec_hash = result.rim_scraper(url)
+        #result.add_attributes(spec_hash)
         puts "#{result.name}"
-        #spec_printer(result)
         result
-        #binding.pry
     end
+
+# I could call on the Scraper.rim_scraper in the #rim_selector method. This would also put the responsibility of
+# calling the scraper methods entirely in the CLI class. My only issue was how to make the url available. If I was sure the 
+# url to be scraped could be available in the Rim instance, it would simply be a matter of passing a 'rim.url' method into the scraper.
 
     def spec_printer(rim)
         puts "#{rim.desc}"
@@ -125,6 +153,5 @@ class CLI
         else
             return false
         end
-
     end
 end
