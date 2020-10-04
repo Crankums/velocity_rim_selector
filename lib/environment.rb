@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
 require_relative "./cli_project/version"
-require 'pry'
+# require 'pry'
 
 module CliProject
   class Error < StandardError; end
