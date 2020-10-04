@@ -1,5 +1,5 @@
 class Rim
-    extend CliProject::Findable
+    extend VelocityRimSelector::Findable
     attr_accessor :colors, :url, :desc, :name, :rim_size, :width, :height, :optimal_tire, :interface, :valve, :bsd, :erd, :weight, :spoke, :applications
 
     @@all = []

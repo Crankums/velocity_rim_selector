@@ -1,5 +1,5 @@
 class Application
-    extend CliProject::Findable
+    extend VelocityRimSelector::Findable
     attr_accessor :name, :url, :rims
 
     @@all = []

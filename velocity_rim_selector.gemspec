@@ -1,16 +1,16 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "cli_project/version"
+require "velocity_rim_selector/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "cli_project"
-  spec.version       = CliProject::VERSION
+  spec.name          = "velocity_rim_selector"
+  spec.version       = VelocityRimSelector::VERSION
   spec.authors       = ["Cranky Donavin"]
   spec.email         = ["crdonavin@gmail.com"]
 
-  spec.summary       = %q{cli project: This is an area for building and testing and making mistakes for my CLI Project}
-  spec.homepage      = "https://github.com/Crankums/CLI_project_bits"
+  spec.summary       = %q{A command line interface for helping select a Velocity rim for your next wheelbuild. A project for Flatiron School}
+  spec.homepage      = "https://github.com/Crankums/velocity_rim_selector"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -18,8 +18,8 @@ Gem::Specification.new do |spec|
     spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
     spec.metadata["homepage_uri"] = spec.homepage
-    spec.metadata["source_code_uri"] = "https://github.com/Crankums/CLI_project_bits"
-    spec.metadata["changelog_uri"] = "https://github.com/Crankums/CLI_project_bits/blob/master/changlelog.md"
+    spec.metadata["source_code_uri"] = "https://github.com/Crankums/velocity_rim_selector"
+    spec.metadata["changelog_uri"] = "https://github.com/Crankums/velocity_rim_selector/blob/master/changlelog.md"
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
